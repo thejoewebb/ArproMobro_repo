@@ -22,14 +22,13 @@ int main(int argc, char **argv)
   // init robot at (0,0,0)
   Robot robot("R2D2", 0,0,0);
   envir.addRobot(robot);
-  Robot robot2("C3P0", 0,0.5,0);
+  Robot robot2("C3P0", 0,0,0);
   envir.addRobot(robot2);
 
   //initiate sensors
   RangeSensor Sensor1 = RangeSensor(robot, 0.1, 0, 0);
-  //RangeSensor Sensor2 = RangeSensor(robot, -0.1, 0, 0);
-  //RangeSensor Sensor3 = RangeSensor(robot, 1, -1, 1);
-  BearingSensor Sensor4 = BearingSensor(robot2,0.1,0,0);
+  BearingSensor Sensor2 = BearingSensor(robot2,0.1,0,0);
+  RangeSensor Sensor3 = RangeSensor(robot2,0.1,0,0);
 
   // init wheels (r = 0.07m, b = 0.3m)
   robot.initWheel(0.07,0.3,10);

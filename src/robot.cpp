@@ -62,8 +62,8 @@ void Robot::rotateWheels(double _left, double _right)
         cout << "Wheels are not initialised. please initialise wheels before passing velocity instructions.";
     else{
         //check that vlim is respected.
-        //if(_left>wheels_vlim_ || _right>wheels_vlim_)
-            //cout << "Wheel velocity setpoint out of bounds, inputs have been scaled automatically";
+        if(_left>wheels_vlim_ || _right>wheels_vlim_)
+            cout << "Wheel velocity setpoint out of bounds, inputs have been scaled automatically";
 
 
         auto scale = max(abs(_left)/wheels_vlim_,abs(_right)/wheels_vlim_);
@@ -90,15 +90,10 @@ void Robot::moveVW(double _v, double _omega)
 {
     // convert _v and _omega to _vx, _vy and _omega
 
-    //double vx_ = _v*cos(pose_.theta);
-    //double vy_ = _v*sin(pose_.theta);
-
     auto left_ = (_v + wheel_b_*_omega)/wheel_r_;
     auto right_ = (_v - wheel_b_*_omega)/wheel_r_;
 
     rotateWheels(left_,right_);
-
-   // moveXYT(vx_,vy_,_omega);
 }
 
 
@@ -119,7 +114,6 @@ void Robot::moveWithSensor(Twist _twist)
 
     for(auto & sensor: sensors_){
         sensor->updateFromRobotPose(pose_);
-        //sensor->update(pose_);
         sensor->correctTwist(_twist);
     }
 
@@ -128,7 +122,6 @@ void Robot::moveWithSensor(Twist _twist)
     //moveXYT(_twist.vx, _twist.vy,_twist.w);
 
     // to fill up, use V-W motion when defined
-
     auto alpha = 20;
 
     double v_ = _twist.vx;
